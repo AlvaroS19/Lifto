@@ -8,3 +8,12 @@ node_modules/
 
 # Logs
 npm-debug.log*
+
+# Prisma generado
+backend/generated/
+
+# Configuración de asistentes de IA
+.agents/
+.claude/
+.cursor/
+.devin/
