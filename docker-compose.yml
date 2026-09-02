@@ -1,0 +1,16 @@
+services:
+  lifto-db:
+    image: postgres:16
+    container_name: lifto-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: lifto
+      POSTGRES_DB: lifto
+    ports:
+      - "5433:5432"
+    volumes:
+      - lifto_db_data:/var/lib/postgresql/data
+
+volumes:
+  lifto_db_data:
