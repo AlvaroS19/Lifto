@@ -6,6 +6,8 @@ import exercisesRoutes from './routes/exercises.routes';
 import routinesRoutes from './routes/routines.routes';
 import { PrismaClient } from "./generated/prisma/client.ts";
 import { PrismaPg } from "@prisma/adapter-pg";
+import sessionsRoutes from './routes/sessions.routes';
+import bodyweightRoutes from './routes/bodyweight.routes';
 
 const app = express();
 
@@ -24,6 +26,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/exercises', exercisesRoutes);
 app.use('/api/routines', routinesRoutes);
+app.use('/api/sessions', sessionsRoutes);
+app.use('/api/bodyweight', bodyweightRoutes);
 
 app.get("/api/health", (_req, res) => {
   res.json({
