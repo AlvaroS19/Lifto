@@ -8,6 +8,7 @@ import ExerciseNew from './pages/ExerciseNew.jsx';
 import SessionTrain from './pages/SessionTrain.jsx';
 import BodyWeight from './pages/BodyWeight.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import AppLayout from './components/AppLayout.jsx';
 
 function App() {
   return (
@@ -15,56 +16,25 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
+      {/* Todas las rutas protegidas cuelgan de este padre: comparten
+          el ProtectedRoute (redirige a /login si no hay sesión) y el
+          AppLayout (tab bar fijo). Las rutas hijas se renderizan
+          dentro del <Outlet /> del layout. */}
       <Route
-        path="/routines"
         element={
           <ProtectedRoute>
-            <Routines />
+            <AppLayout />
           </ProtectedRoute>
         }
-      />
-      <Route
-        path="/routines/new"
-        element={
-          <ProtectedRoute>
-            <RoutineNew />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/routines/:id"
-        element={
-          <ProtectedRoute>
-            <RoutineDetail />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/exercises/new"
-        element={
-          <ProtectedRoute>
-            <ExerciseNew />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/sessions/:id"
-        element={
-          <ProtectedRoute>
-            <SessionTrain />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/bodyweight"
-        element={
-          <ProtectedRoute>
-            <BodyWeight />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route path="/" element={<Navigate to="/routines" replace />} />
+      >
+        <Route path="/routines" element={<Routines />} />
+        <Route path="/routines/new" element={<RoutineNew />} />
+        <Route path="/routines/:id" element={<RoutineDetail />} />
+        <Route path="/exercises/new" element={<ExerciseNew />} />
+        <Route path="/sessions/:id" element={<SessionTrain />} />
+        <Route path="/bodyweight" element={<BodyWeight />} />
+        <Route path="/" element={<Navigate to="/routines" replace />} />
+      </Route>
     </Routes>
   );
 }
