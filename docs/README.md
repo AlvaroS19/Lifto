@@ -2,25 +2,55 @@
 
 **Train. Track. Progress.**
 
-Lifto es una aplicación de seguimiento de entrenamientos de gimnasio y peso corporal. Planifica tus rutinas semanales, registra cada sesión con series y repeticiones reales, sigue tu progreso de peso corporal y entrena con esquemas de progresión automática — todo con tus propios datos.
+Lifto es una aplicación de seguimiento de entrenamientos de gimnasio y peso corporal. Planifica tus rutinas, registra cada sesión con series y repeticiones reales, y sigue tu progreso de peso corporal — todo con tus propios datos.
 
-Proyecto personal desarrollado como ejercicio práctico simulando un flujo de trabajo profesional real (fases, versiones, documentación), inspirado en [openGym](https://gitlab.com/DuarteSantos8/opengym).
-
-## Stack técnico
-
-- **Frontend:** React + TanStack Query
-- **Backend:** Node.js + Express
-- **Base de datos:** PostgreSQL + Prisma
-- **Autenticación:** JWT (fase futura: passkeys / WebAuthn)
-- **Infraestructura futura:** Docker (self-hosted), Capacitor (app móvil)
+Proyecto personal desarrollado como ejercicio práctico simulando un flujo de trabajo profesional real (fases, versiones, documentación).
 
 ## Estado del proyecto
 
-🚧 En desarrollo — v0.1 (MVP)
+🚧 En desarrollo — **MVP funcional completo** (backend + frontend en móvil). Pendiente: diseño visual, superseries/drop-sets/progresión automática, passkeys, self-hosting con Docker y app móvil nativa.
 
-## Instalación y ejecución
+## Funcionalidad actual
 
-_Pendiente — se documentará cuando el proyecto tenga su primera versión ejecutable._
+- Registro e inicio de sesión (JWT)
+- Creación y gestión de rutinas, con ejercicios propios
+- Registro de entrenamientos en tiempo real (serie a serie: reps, peso)
+- Seguimiento de peso corporal con gráfico de evolución
+- Navegación completa en móvil (tab bar)
+
+## Stack técnico
+
+- **Frontend:** React + TanStack Query + React Router
+- **Backend:** Node.js + Express + TypeScript
+- **Base de datos:** PostgreSQL + Prisma
+- **Autenticación:** JWT (fase futura: passkeys / WebAuthn)
+- **Infraestructura:** Docker (PostgreSQL local vía docker-compose)
+- **Infraestructura futura:** self-hosting completo con Docker, Capacitor (app móvil)
+
+## Instalación y ejecución en local
+
+Requisitos: Node.js 24+, Docker.
+
+```bash
+git clone https://github.com/AlvaroS19/Lifto.git
+cd Lifto
+
+# 1. Base de datos
+docker compose up -d
+
+# 2. Backend
+cd backend
+npm install
+cp .env.example .env   # completa DATABASE_URL y JWT_SECRET
+npx prisma generate
+npx prisma migrate deploy
+npm run dev             # http://localhost:3000
+
+# 3. Frontend (en otra terminal)
+cd ../frontend
+npm install
+npm run dev              # http://localhost:5173
+```
 
 ## Documentación
 
@@ -31,11 +61,11 @@ _Pendiente — se documentará cuando el proyecto tenga su primera versión ejec
 
 ## Roadmap
 
-- **v0.1** — MVP: rutinas, logs de entrenamiento, seguimiento de peso, auth con JWT
-- **v0.2** — Superseries, drop-sets, rest-pause, cardio, esquemas de progresión
-- **v0.3** — Autenticación con passkeys / WebAuthn
-- **v0.4** — Dockerización / self-hosted
-- **v0.5** — App móvil con Capacitor
+- [x] **v0.1** — MVP: rutinas, logs de entrenamiento, seguimiento de peso, auth con JWT
+- [ ] **v0.2** — Superseries, drop-sets, rest-pause, cardio, esquemas de progresión
+- [ ] **v0.3** — Autenticación con passkeys / WebAuthn
+- [ ] **v0.4** — Dockerización completa / self-hosted
+- [ ] **v0.5** — App móvil con Capacitor
 
 ## Licencia
 
