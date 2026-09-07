@@ -5,6 +5,7 @@ import Routines from './pages/Routines.jsx';
 import RoutineNew from './pages/RoutineNew.jsx';
 import RoutineDetail from './pages/RoutineDetail.jsx';
 import ExerciseNew from './pages/ExerciseNew.jsx';
+import SessionTrain from './pages/SessionTrain.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 function App() {
@@ -42,6 +43,14 @@ function App() {
         element={
           <ProtectedRoute>
             <ExerciseNew />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/sessions/:id"
+        element={
+          <ProtectedRoute>
+            <SessionTrain />
           </ProtectedRoute>
         }
       />
