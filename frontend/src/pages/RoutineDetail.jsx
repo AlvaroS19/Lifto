@@ -4,7 +4,7 @@ import { fetchRoutine } from '../lib/routines';
 import { createSession } from '../lib/sessions';
 
 export default function RoutineDetail() {
-  const { id } = useParams(); // lee el :id de la URL, ej. /routines/74d3f48d...
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const { data: routine, isLoading, isError } = useQuery({
@@ -19,28 +19,31 @@ export default function RoutineDetail() {
     },
   });
 
-  if (isLoading) return <p>Cargando rutina...</p>;
-  if (isError || !routine) return <p>No se ha encontrado la rutina.</p>;
+  if (isLoading) return <div className="page"><p>Cargando rutina...</p></div>;
+  if (isError || !routine) return <div className="page"><p className="error-text">No se ha encontrado la rutina.</p></div>;
 
   return (
-    <div>
-      <p>
+    <div className="page">
+      <p style={{ marginBottom: '20px' }}>
         <Link to="/routines">← Volver a rutinas</Link>
       </p>
 
       <h1>{routine.name}</h1>
+      <h2 style={{ marginTop: '24px', marginBottom: '10px' }}>Ejercicios</h2>
 
-      <h2>Ejercicios</h2>
-      <ul>
-        {routine.exercises.map((re) => (
-          <li key={re.id}>
-            {re.exercise.name} — {re.targetSets}x{re.targetReps}
-            {re.targetWeight ? ` a ${re.targetWeight}kg` : ''}
-          </li>
-        ))}
-      </ul>
+      {routine.exercises.map((re) => (
+        <div key={re.id} className="card">
+          <div style={{ color: 'var(--text)', fontWeight: 500 }}>{re.exercise.name}</div>
+          <div className="stat" style={{ fontSize: '15px', marginTop: '4px' }}>
+            {re.targetSets}x{re.targetReps}
+            {re.targetWeight ? ` · ${re.targetWeight}kg` : ''}
+          </div>
+        </div>
+      ))}
 
       <button
+        className="btn btn-block"
+        style={{ marginTop: '20px' }}
         onClick={() => startSessionMutation.mutate()}
         disabled={startSessionMutation.isPending}
       >

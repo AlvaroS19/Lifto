@@ -16,7 +16,7 @@ export default function ExerciseNew() {
     mutationFn: createExercise,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['exercises'] });
-      navigate(-1); // vuelve a la página anterior (normalmente, el formulario de rutina)
+      navigate(-1);
     },
     onError: (err) => {
       setError(err.response?.data?.error ?? 'Error al crear el ejercicio');
@@ -36,21 +36,16 @@ export default function ExerciseNew() {
   }
 
   return (
-    <div>
+    <div className="page">
       <h1>Nuevo ejercicio</h1>
 
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="field">
           <label htmlFor="name">Nombre</label>
-          <input
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Ej. Sentadilla"
-          />
+          <input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Ej. Sentadilla" />
         </div>
 
-        <div>
+        <div className="field">
           <label htmlFor="muscleGroup">Grupo muscular</label>
           <input
             id="muscleGroup"
@@ -60,7 +55,7 @@ export default function ExerciseNew() {
           />
         </div>
 
-        <div>
+        <div className="field">
           <label htmlFor="equipment">Equipamiento (opcional)</label>
           <input
             id="equipment"
@@ -70,14 +65,14 @@ export default function ExerciseNew() {
           />
         </div>
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p className="error-text">{error}</p>}
 
-        <button type="submit" disabled={mutation.isPending}>
+        <button type="submit" className="btn btn-block" disabled={mutation.isPending}>
           {mutation.isPending ? 'Guardando...' : 'Guardar ejercicio'}
         </button>
       </form>
 
-      <p>
+      <p className="link-row">
         <Link to="/routines">Volver a rutinas</Link>
       </p>
     </div>

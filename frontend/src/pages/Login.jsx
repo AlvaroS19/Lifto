@@ -1,25 +1,24 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { login } from '../lib/auth';
+import logo from '../assets/logo.png';
 
 export default function Login() {
-  // useState devuelve un array: [valor_actual, función_para_cambiarlo]
-  // Es el equivalente a `const email = ref('')` de Vue, pero sin .value
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate(); // equivalente a useRouter() en Vue Router
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
-    e.preventDefault(); // evita que el formulario recargue la página, como en Vue
+    e.preventDefault();
     setError(null);
     setLoading(true);
 
     try {
       await login(email, password);
-      navigate('/'); // redirige a la home tras login correcto
+      navigate('/');
     } catch (err) {
       setError(err.response?.data?.error ?? 'Error al iniciar sesión');
     } finally {
@@ -28,11 +27,16 @@ export default function Login() {
   }
 
   return (
-    <div>
-      <h1>Iniciar sesión</h1>
+    <div className="page" style={{ paddingTop: '48px' }}>
+      <img src={logo} alt="Lifto" style={{ height: '64px', display: 'block', margin: '0 auto 8px' }} />
+      <p style={{ textAlign: 'center', fontSize: '13px', letterSpacing: '0.03em', marginBottom: '32px' }}>
+        Train. Track. Progress.
+      </p>
+      <h1>Bienvenido de vuelta</h1>
+      <p style={{ marginBottom: '32px' }}>Inicia sesión para seguir con tu progreso.</p>
 
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="field">
           <label htmlFor="email">Email</label>
           <input
             id="email"
@@ -43,7 +47,7 @@ export default function Login() {
           />
         </div>
 
-        <div>
+        <div className="field">
           <label htmlFor="password">Contraseña</label>
           <input
             id="password"
@@ -54,14 +58,14 @@ export default function Login() {
           />
         </div>
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p className="error-text">{error}</p>}
 
-        <button type="submit" disabled={loading}>
+        <button type="submit" className="btn btn-block" disabled={loading}>
           {loading ? 'Entrando...' : 'Entrar'}
         </button>
       </form>
 
-      <p>
+      <p className="link-row">
         ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
       </p>
     </div>

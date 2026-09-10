@@ -3,33 +3,33 @@ import { Link } from 'react-router-dom';
 import { fetchRoutines } from '../lib/routines';
 
 export default function Routines() {
-  // useQuery necesita una "queryKey" (identificador único para cachear este dato)
-  // y una "queryFn" (la función que trae los datos). React Query maneja
-  // automáticamente loading/error/refetch a partir de esto.
   const { data: routines, isLoading, isError } = useQuery({
     queryKey: ['routines'],
     queryFn: fetchRoutines,
   });
 
-  if (isLoading) return <p>Cargando rutinas...</p>;
-  if (isError) return <p>Error al cargar las rutinas.</p>;
+  if (isLoading) return <div className="page"><p>Cargando rutinas...</p></div>;
+  if (isError) return <div className="page"><p className="error-text">Error al cargar las rutinas.</p></div>;
 
   return (
-    <div>
+    <div className="page">
       <h1>Mis rutinas</h1>
+      <p style={{ marginBottom: '20px' }}>Elige una rutina para entrenar o crea una nueva.</p>
 
-      <Link to="/routines/new">+ Nueva rutina</Link>
+      <Link to="/routines/new" className="btn btn-block" style={{ marginBottom: '24px', textDecoration: 'none' }}>
+        + Nueva rutina
+      </Link>
 
       {routines.length === 0 ? (
         <p>Todavía no tienes rutinas. Crea la primera.</p>
       ) : (
-        <ul>
-          {routines.map((routine) => (
-            <li key={routine.id}>
-              <Link to={`/routines/${routine.id}`}>{routine.name}</Link>
-            </li>
-          ))}
-        </ul>
+        routines.map((routine) => (
+          <Link key={routine.id} to={`/routines/${routine.id}`} style={{ textDecoration: 'none' }}>
+            <div className="card">
+              <h2 style={{ color: 'var(--text)', fontSize: '17px' }}>{routine.name}</h2>
+            </div>
+          </Link>
+        ))
       )}
     </div>
   );
